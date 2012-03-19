@@ -1,0 +1,23 @@
+h2 hello
+script
+  function drawGoGraph(buildTimes) {
+    var go = new RGraph.Line('go', _(buildTimes).map(function(buildTime) { return (new Date(buildTime.end) - new Date(buildTime.start)) / 1000 }).filter(function(diff) { return diff > 0; }));
+    go.Set('chart.title', 'Build Times');
+    go.Set('chart.gutter.top', 45);
+    go.Set('chart.gutter.bottom', 125);
+    go.Set('chart.gutter.left', 50);
+    go.Set('chart.text.angle', 90);
+    go.Set('chart.shadow', true);
+    go.Set('chart.linewidth', 1);
+ 
+    go.Draw();
+  }
+
+  $(document).ready(function() {
+    $.getJSON('/show', function(data) {
+      drawGoGraph(data);
+    });
+  });
+
+div(align="center")
+  canvas(id="go", width="500", height="400")
